@@ -60,13 +60,13 @@ public class AdminControlPanel extends JFrame implements ActionListener{
         threeSections.setLayout(new GridLayout(3,1));
         threeSections.add(addUser);
         
+        
         //user profile button
         JButton userProfileButton = new JButton("User Profile");
         userProfileButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
-                System.out.println(ae.getActionCommand());
-                UserView userview = new UserView(new User("poop"));
+                UserView userview = new UserView((User)tree.getLastSelectedPathComponent());
                 userview.setSize(600, 600);
                 userview.setTitle("User View");
                 userview.setVisible(true);

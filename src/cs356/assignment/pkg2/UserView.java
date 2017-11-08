@@ -27,7 +27,9 @@ public class UserView extends JFrame {
         JPanel addUser = new JPanel();
         addUser.setLayout(new GridLayout(1,2));
         addUser.add(new JTextField());
-        addUser.add(new JButton("add"));
+        JButton follow = new JButton("Follow User");
+        
+        addUser.add(follow);
         this.add(addUser);
         this.add(new JList());
         
@@ -36,6 +38,8 @@ public class UserView extends JFrame {
         addUser.add(new JTextField());
         addUser.add(new JButton("tweet"));
         this.add(tweet);
-        this.add(new JList());
+        JList tweetView = new JList();
+        tweetView.setListData(user.getTweets());
+        this.add(tweetView);
     };
 }
