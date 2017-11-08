@@ -6,6 +6,8 @@
 package cs356.assignment.pkg2;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,7 +21,7 @@ import javax.swing.tree.TreeNode;
  *
  * @author Josh
  */
-public class AdminControlPanel extends JFrame {
+public class AdminControlPanel extends JFrame implements ActionListener{
 
     public AdminControlPanel() {
 
@@ -57,7 +59,21 @@ public class AdminControlPanel extends JFrame {
         JPanel threeSections = new JPanel();
         threeSections.setLayout(new GridLayout(3,1));
         threeSections.add(addUser);
-        threeSections.add(new JButton("Button"));
+        
+        //user profile button
+        JButton userProfileButton = new JButton("User Profile");
+        userProfileButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                System.out.println(ae.getActionCommand());
+                UserView userview = new UserView(new User("poop"));
+                userview.setSize(600, 600);
+                userview.setTitle("User View");
+                userview.setVisible(true);
+            }
+            
+        });
+        threeSections.add(userProfileButton);
         
         JPanel fourButtons = new JPanel();
         fourButtons.setLayout(new GridLayout(2,2));
@@ -69,6 +85,12 @@ public class AdminControlPanel extends JFrame {
         
         this.add(threeSections);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        System.out.println(ae.toString());
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     
