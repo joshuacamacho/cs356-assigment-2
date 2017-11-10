@@ -18,7 +18,6 @@ public class UserGroup extends Component {
     
     UserGroup(String name){
         super(name);
-        children = new ArrayList<Component>();
     }
     public void add(Component n){
         n.setParent(this);

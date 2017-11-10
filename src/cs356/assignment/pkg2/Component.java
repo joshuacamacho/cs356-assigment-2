@@ -19,6 +19,7 @@ public class Component implements TreeNode{
     String name;
     Component(String name){
         this.name=name;
+        children = new ArrayList<Component>();
     }
     
     public void setParent(Component p){
@@ -67,5 +68,15 @@ public class Component implements TreeNode{
     @Override
     public String toString(){
         return this.name;
+    }
+    
+    public Component find(String s){
+        if(name.equals(s)) return this;
+        if(children.size()==0) return null;
+        for(Component x: children){
+            Component n = x.find(s);
+            if(n!=null) return n;
+        }
+        return null;
     }
 }

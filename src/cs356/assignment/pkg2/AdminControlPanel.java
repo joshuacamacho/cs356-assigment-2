@@ -66,9 +66,22 @@ public class AdminControlPanel extends JFrame implements ActionListener{
         userProfileButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
-                UserView userview = new UserView((User)tree.getLastSelectedPathComponent());
+                User u = (User)tree.getLastSelectedPathComponent();
+                UserView userview = new UserView(u);
                 userview.setSize(600, 600);
                 userview.setTitle("User View");
+                userview.SetActionListener(new ActionListener(){
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        JTextField j = (JTextField)ae.getSource();
+                        String searchID = j.getText();
+                        System.out.println(searchID);
+//                        User toSubscribe =;
+                        User toSub = (User)top.find(searchID);
+                        System.out.println(u.name+" subscribing to "+toSub.name);
+                        u.subscribeTo(toSub);
+                    }
+                });
                 userview.setVisible(true);
             }
             

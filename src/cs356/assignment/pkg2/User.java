@@ -8,6 +8,7 @@ package cs356.assignment.pkg2;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedList;
+import javax.swing.DefaultListModel;
 import javax.swing.tree.TreeNode;
 
 /**
@@ -17,13 +18,13 @@ import javax.swing.tree.TreeNode;
 public class User extends Component{
     private LinkedList<User> subscribers;
     private LinkedList<User> subscriptions;
-    private LinkedList<Tweet> tweets;
+    DefaultListModel tweets;
     private LinkedList<Tweet> myTweets;
     User(String name){
         super(name);
         subscribers = new LinkedList<User>();
         subscriptions = new LinkedList<User>();
-        tweets = new LinkedList<Tweet>();
+        tweets = new DefaultListModel();
         myTweets = new LinkedList<Tweet>();
     }
     @Override
@@ -62,18 +63,22 @@ public class User extends Component{
     }
     public void subscribe(User u){
         subscribers.add(u);
-        u.updateSubscriberList(this);
+        
         for(Tweet tweet: myTweets){
             u.recieveMessage(tweet);
         }
     }
-    public void recieveMessage(Tweet t){
-        tweets.add(t);
+    public void subscribeTo(User u){
+        u.subscribe(this);
+        updateSubscriberList(u);
     }
-    private void sendTweet(String message){
+    public void recieveMessage(Tweet t){
+        tweets.addElement(t);
+    }
+    public void sendTweet(String message){
         Tweet t = new Tweet("@"+name+" "+message);
         myTweets.add(t);
-        tweets.add(t);
+        tweets.addElement(t);
         broadcast(t);
     }
 
@@ -87,14 +92,8 @@ public class User extends Component{
         subscriptions.add(u);
     }
 
-    public Object[] getTweets() {
-        if(tweets.size()>0)
-        return tweets.toArray();
-        else{
-            Tweet[] temp = new Tweet[1];
-            temp[0] = new Tweet("No tweets yet");
-            return temp;
-        }
+    public DefaultListModel getTweets() {
+        return tweets;
     }
     
 }
