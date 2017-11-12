@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cs356.assignment.pkg2;
 
 import java.awt.EventQueue;
 
 /**
- *
+ * Driver for AdminControlPanel tweet app
  * @author Josh
  */
 public class Cs356Assignment2 {

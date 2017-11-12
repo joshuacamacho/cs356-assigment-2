@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cs356.assignment.pkg2;
 
 import java.awt.GridLayout;
@@ -20,7 +14,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 
 /**
- * 
+ * Admin control panel for tweet application
  * @author Josh
  */
 public class AdminControlPanel extends JFrame {
@@ -30,19 +24,23 @@ public class AdminControlPanel extends JFrame {
         initUI();
     }
     
+    /**
+     * Initialize UI
+     */
     private void initUI() {
-        
+        // Set Control Panel stuff
         setTitle("Admin Control Panel");
         setSize(600, 600);
         setLocationRelativeTo(null);
         this.setLayout(new GridLayout(1,2));
+        
+        
+        // Set tree root with default info
         root = new UserGroup("Users");
         root.add(new User("Joshua Camacho"));
-        
         UserGroup middle = new UserGroup("Bad students");
         middle.add(new User("Danielle"));
         root.add(middle);
-        
         JTree tree = new JTree(root);
         JScrollPane treeView = new JScrollPane(tree);
         this.add(treeView);
@@ -50,12 +48,13 @@ public class AdminControlPanel extends JFrame {
         
         
         
-        //add user buttons
+        //add user text field and button
         JPanel addUser = new JPanel();
         addUser.setLayout(new GridLayout(2,2));
         JTextField addUserTextField = new JTextField();
         addUser.add(addUserTextField);
         JButton addUserButton = new JButton("Add User");
+        // add user button listener
         addUserButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -77,7 +76,7 @@ public class AdminControlPanel extends JFrame {
         addUser.add(addUserButton);
         
         
-        // Add usergroup button
+        // Add usergroup  textField and button
         JTextField addUserGroupTextField = new JTextField();
         addUser.add(addUserGroupTextField);
         JButton addUserGroupButton = new JButton("Add UserGroup");
@@ -101,10 +100,7 @@ public class AdminControlPanel extends JFrame {
                 }
             }
         });
-        
-        
         addUser.add(addUserGroupButton);
-        
         JPanel threeSections = new JPanel();
         threeSections.setLayout(new GridLayout(3,1));
         threeSections.add(addUser);
@@ -118,6 +114,7 @@ public class AdminControlPanel extends JFrame {
                 User u = (User)tree.getLastSelectedPathComponent();
                 UserView userview = new UserView(u);
                 userview.setTitle(u.getName()+"'s profile");
+                // New follower event
                 userview.SetActionListener(new ActionListener(){
                     @Override
                     public void actionPerformed(ActionEvent ae) {
@@ -193,12 +190,21 @@ public class AdminControlPanel extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }  
     
+    /**
+     * Expands the rows on a JTree UI elemnent
+     * @param tree JTree to expand
+     */
     private void expandTree(JTree tree){
         for (int i = 0; i < tree.getRowCount(); i++) {
             tree.expandRow(i);
         }
     }
     
+    /**
+     * Recursively traverse tree, breadth first, visit each node with visitor
+     * @param node Node to recursively traverse
+     * @param v NodeVisitor to call on each node
+     */
     private void treeTraverse(Component node, NodeVisitor v) {
         ArrayList<Component> children = node.getChildren();
         for(Component child: children){

@@ -12,10 +12,16 @@ import javax.swing.tree.TreeNode;
  * @author Josh
  */
 public class User extends Component{
+    
     private LinkedList<User> subscribers;
     private DefaultListModel subscriptions;
     private DefaultListModel tweets;
     private ArrayList<Tweet> myTweets;
+    
+    /**
+     * Constructor, requires a name
+     * @param name String which represents the name of the User
+     */
     User(String name){
         super(name);
         subscribers = new LinkedList<User>();
@@ -23,44 +29,76 @@ public class User extends Component{
         tweets = new DefaultListModel();
         myTweets = new ArrayList<Tweet>();
     }
+    
+    /**
+     * Returns null because users dont have children
+     * @param i
+     * @return null
+     */
     @Override
     public TreeNode getChildAt(int i) {
         return null;
     }
 
+    /**
+     * Child count always 0 for users
+     * @return 0
+     */
     @Override
     public int getChildCount() {
         return 0;
     }
 
+    /**
+     * Returns parent of user
+     * @return Component parent
+     */
     @Override
     public TreeNode getParent() {
         return parent;
     }
 
+    /**
+     * Returns -1 because users never have children
+     * @param tn Node to check
+     * @return -1
+     */
     @Override
     public int getIndex(TreeNode tn) {
         return -1;
     }
 
+    /**
+     * Returns false, users can't have children
+     * @return false
+     */
     @Override
     public boolean getAllowsChildren() {
         return false;
     }
 
+    /**
+     * Returns true because users are always leaf nodes
+     * @return true
+     */
     @Override
     public boolean isLeaf() {
         return true;
     }
 
+    /**
+     * Unsupported
+     * @return Exception
+     */
     @Override
     public Enumeration children() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     /**
-     * 
-     * @param u 
+     * Allows a user to subscribe to this user
+     * Also gives new subscriber all tweets from this user
+     * @param u User to subscribe to this user
      */
     public void subscribe(User u){
         subscribers.add(u);
@@ -69,13 +107,28 @@ public class User extends Component{
             u.recieveMessage(tweet);
         }
     }
+    
+    /**
+     * Subscribes a another user to this user
+     * @param u User to add to this user's subscription list
+     */
     public void subscribeTo(User u){
         u.subscribe(this);
         updateSubscriberList(u);
     }
+    
+    /**
+     * Push message to this user's tweet list
+     * @param t Tweet to add to tweet list
+     */
     public void recieveMessage(Tweet t){
         tweets.addElement(t);
     }
+    
+    /**
+     * Send tweet from this user. Also broadcasts to all subscribers
+     * @param message String message to send as Tweet
+     */
     public void sendTweet(String message){
         Tweet t = new Tweet("@"+name+" "+message);
         myTweets.add(t);
@@ -83,6 +136,10 @@ public class User extends Component{
         broadcast(t);
     }
 
+    /**
+     * Broadcasts a tweet to all subscribers
+     * @param t Tweet to broadcast
+     */
     private void broadcast(Tweet t) {
         for(User user: subscribers){
             user.recieveMessage(t);

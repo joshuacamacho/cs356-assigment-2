@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cs356.assignment.pkg2;
 
 import java.awt.GridLayout;
@@ -15,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- *
+ * User's view
  * @author Josh
  */
 public class UserView extends JFrame {
@@ -31,14 +26,15 @@ public class UserView extends JFrame {
         makeUI();
     }
     private void makeUI(){
+        
+        // init window
         this.setSize(800,800);
         this.setLayout(new GridLayout(0,1));
         JPanel addUser = new JPanel();
         addUser.setLayout(new GridLayout(1,2));
+        // follow user
         followId = new JTextField();
-        
         addUser.add(followId);
-        
         follow = new JButton("Follow User");
         follow.addActionListener(new ActionListener(){
             @Override
@@ -49,22 +45,19 @@ public class UserView extends JFrame {
                } 
             }
         });
-//        follow.setFont(follow.getFont().deriveFont(12.0f));
         addUser.add(follow);
         this.add(addUser);
         
-        
+        // View people you follow
         JList subscribersList = new JList(); 
         subscribersList.setModel(user.getSubscriptionList());
         this.add(subscribersList);
         
-        
+        //Send tweet
         addUser.setLayout(new GridLayout(1,2));
         tweetText = new JTextField();
-//        tweetText.setFont(tweetText.getFont().deriveFont(24.0f));
         addUser.add(tweetText);
         tweetButton = new JButton("tweet");
-//        tweetButton.setFont(tweetButton.getFont().deriveFont(24.0f));
         tweetButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -75,16 +68,24 @@ public class UserView extends JFrame {
         });
         addUser.add(tweetButton);
         
-        
+        // View tweets
         JList tweetView = new JList();
         tweetView.setModel(user.getTweets());
         this.add(tweetView);
     };
     
+    /**
+     * Set ActionListener for event firing
+     * @param a 
+     */
     public void SetActionListener(ActionListener a){
         this.listener = a;
     }
 
+    /**
+     * Get user associated with this user view
+     * @return this windows user
+     */
     public User getUser() {
         return this.user;
     }
