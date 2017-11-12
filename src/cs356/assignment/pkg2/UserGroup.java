@@ -24,5 +24,10 @@ public class UserGroup extends Component {
         children.add(n);
     }
     
+    @Override
+    public void acceptVisitor(NodeVisitor v){
+        v.visitUserGroup(this);
+    }
+
     
 }

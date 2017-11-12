@@ -13,7 +13,7 @@ import javax.swing.tree.TreeNode;
  *
  * @author Josh
  */
-public class Component implements TreeNode{
+abstract class Component implements TreeNode{
     ArrayList<Component> children;
     Component parent;
     String name;
@@ -70,6 +70,8 @@ public class Component implements TreeNode{
         return this.name;
     }
     
+    public abstract void acceptVisitor(NodeVisitor v);
+    
     public Component find(String s){
         if(name.equals(s)) return this;
         if(children.size()==0) return null;
@@ -78,5 +80,9 @@ public class Component implements TreeNode{
             if(n!=null) return n;
         }
         return null;
+    }
+    
+    ArrayList<Component> getChildren() {
+        return children;
     }
 }

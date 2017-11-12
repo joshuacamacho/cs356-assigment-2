@@ -8,8 +8,10 @@ package cs356.assignment.pkg2;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -23,7 +25,7 @@ import javax.swing.tree.TreeNode;
  * @author Josh
  */
 public class AdminControlPanel extends JFrame {
-
+    private UserGroup root;
     public AdminControlPanel() {
 
         initUI();
@@ -35,14 +37,14 @@ public class AdminControlPanel extends JFrame {
         setSize(600, 600);
         setLocationRelativeTo(null);
         this.setLayout(new GridLayout(1,2));
-        UserGroup top = new UserGroup("Users");
-        top.add(new User("Joshua Camacho"));
+        root = new UserGroup("Users");
+        root.add(new User("Joshua Camacho"));
         
         UserGroup middle = new UserGroup("Bad students");
         middle.add(new User("Danielle"));
-        top.add(middle);
+        root.add(middle);
         
-        JTree tree = new JTree(top);
+        JTree tree = new JTree(root);
         JScrollPane treeView = new JScrollPane(tree);
         this.add(treeView);
         expandTree(tree);
@@ -123,7 +125,7 @@ public class AdminControlPanel extends JFrame {
                         JTextField j = (JTextField)ae.getSource();
                         String searchID = j.getText();
                         System.out.println(searchID);
-                        User toSub = (User)top.find(searchID);
+                        User toSub = (User)root.find(searchID);
                         System.out.println(u.getName()+" subscribing to "+toSub.getName());
                         u.subscribeTo(toSub);
                     }
@@ -136,10 +138,56 @@ public class AdminControlPanel extends JFrame {
         
         JPanel fourButtons = new JPanel();
         fourButtons.setLayout(new GridLayout(2,2));
-        fourButtons.add(new JButton("Button 1"));
-        fourButtons.add(new JButton("Button 1"));
-        fourButtons.add(new JButton("Button 1"));
-        fourButtons.add(new JButton("Button 1"));
+        
+        // total users
+        JButton totalUsersButton = new JButton("Total Users");
+        totalUsersButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                NodeVisitor v = new UserCountVisitor();
+                treeTraverse(root,v);
+                JOptionPane.showMessageDialog(null, "Total Users: "+v.getResult());
+            }
+        });
+        fourButtons.add(totalUsersButton);
+        
+        //total groups
+        JButton totalUserGroupsButton = new JButton("Total UserGroups");
+        totalUserGroupsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                NodeVisitor v = new UserGroupCountVisitor();
+                treeTraverse(root,v);
+                JOptionPane.showMessageDialog(null, "Total UserGroups: "+v.getResult());
+            }
+        });
+        fourButtons.add(totalUserGroupsButton);
+        
+        //total messages
+        JButton totalTweetsButton = new JButton("Total Tweets");
+        totalTweetsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                NodeVisitor v = new MessageCountVisitor();
+                treeTraverse(root,v);
+                JOptionPane.showMessageDialog(null, "Total Tweets: "+v.getResult());
+            }
+        });
+        fourButtons.add(totalTweetsButton);
+        
+        
+        // positive message %
+        JButton positiveMessageButton = new JButton("% Positive Messages");
+        positiveMessageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                NodeVisitor v = new PositiveMessageCountVisitor();
+                treeTraverse(root,v);
+                JOptionPane.showMessageDialog(null, "Positive Messages : "+v.getResult()+"%");
+            }
+        });
+        
+        fourButtons.add(positiveMessageButton);
         threeSections.add(fourButtons);
         
         this.add(threeSections);
@@ -150,5 +198,13 @@ public class AdminControlPanel extends JFrame {
         for (int i = 0; i < tree.getRowCount(); i++) {
             tree.expandRow(i);
         }
+    }
+    
+    private void treeTraverse(Component node, NodeVisitor v) {
+        ArrayList<Component> children = node.getChildren();
+        for(Component child: children){
+            treeTraverse(child,v);
+        }
+        node.acceptVisitor(v);
     }
 }

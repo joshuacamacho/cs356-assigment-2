@@ -5,6 +5,7 @@
  */
 package cs356.assignment.pkg2;
 
+import java.awt.List;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -18,14 +19,14 @@ import javax.swing.tree.TreeNode;
 public class User extends Component{
     private LinkedList<User> subscribers;
     private DefaultListModel subscriptions;
-    DefaultListModel tweets;
-    private LinkedList<Tweet> myTweets;
+    private DefaultListModel tweets;
+    private ArrayList<Tweet> myTweets;
     User(String name){
         super(name);
         subscribers = new LinkedList<User>();
         subscriptions = new DefaultListModel();
         tweets = new DefaultListModel();
-        myTweets = new LinkedList<Tweet>();
+        myTweets = new ArrayList<Tweet>();
     }
     @Override
     public TreeNode getChildAt(int i) {
@@ -101,6 +102,19 @@ public class User extends Component{
 
     public String getName() {
         return this.name;
+    }
+    
+    @Override
+    public void acceptVisitor(NodeVisitor v){
+        v.visitUser(this);
+    }
+    
+    public int getTweetCount(){
+        return myTweets.size();
+    }
+    
+    public ArrayList<Tweet> getTweetsAsList(){
+        return myTweets;
     }
     
 }
