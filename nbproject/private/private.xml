@@ -3,11 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/Cs356Assignment2.java</file>
+            <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/MessageCountVisitor.java</file>
             <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/Component.java</file>
             <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/UserView.java</file>
+            <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/NodeVisitor.java</file>
             <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/User.java</file>
+            <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/Tweet.java</file>
+            <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/PositiveMessageCountVisitor.java</file>
+            <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/UserCountVisitor.java</file>
             <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/AdminControlPanel.java</file>
             <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/UserGroup.java</file>
+            <file>file:/C:/Users/Josh/Desktop/git/cs356-assigment-2/src/cs356/assignment/pkg2/UserGroupCountVisitor.java</file>
         </group>
     </open-files>
 </project-private>

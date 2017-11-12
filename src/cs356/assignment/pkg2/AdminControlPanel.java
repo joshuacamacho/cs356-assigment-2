@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package cs356.assignment.pkg2;
 
 import java.awt.GridLayout;
@@ -16,12 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 
 /**
- *
+ * 
  * @author Josh
  */
 public class AdminControlPanel extends JFrame {
@@ -30,7 +29,7 @@ public class AdminControlPanel extends JFrame {
 
         initUI();
     }
-
+    
     private void initUI() {
         
         setTitle("Admin Control Panel");
