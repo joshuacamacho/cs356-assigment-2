@@ -64,7 +64,7 @@ public class UserView extends JFrame {
         tweetButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if(tweetText.getText()!=""){
+                if(!tweetText.getText().isEmpty()){
                     user.sendTweet(tweetText.getText());
                 }
             }
