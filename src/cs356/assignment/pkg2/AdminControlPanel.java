@@ -116,8 +116,7 @@ public class AdminControlPanel extends JFrame {
             public void actionPerformed(ActionEvent ae) {
                 User u = (User)tree.getLastSelectedPathComponent();
                 UserView userview = new UserView(u);
-                userview.setSize(600, 600);
-                userview.setTitle("User View");
+                userview.setTitle(u.getName()+"'s profile");
                 userview.SetActionListener(new ActionListener(){
                     @Override
                     public void actionPerformed(ActionEvent ae) {
@@ -125,7 +124,7 @@ public class AdminControlPanel extends JFrame {
                         String searchID = j.getText();
                         System.out.println(searchID);
                         User toSub = (User)top.find(searchID);
-                        System.out.println(u.name+" subscribing to "+toSub.name);
+                        System.out.println(u.getName()+" subscribing to "+toSub.getName());
                         u.subscribeTo(toSub);
                     }
                 });

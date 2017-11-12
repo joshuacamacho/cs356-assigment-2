@@ -31,7 +31,7 @@ public class UserView extends JFrame {
         makeUI();
     }
     private void makeUI(){
-        this.setSize(800,1200);
+        this.setSize(800,800);
         this.setLayout(new GridLayout(0,1));
         JPanel addUser = new JPanel();
         addUser.setLayout(new GridLayout(1,2));
@@ -52,9 +52,13 @@ public class UserView extends JFrame {
 //        follow.setFont(follow.getFont().deriveFont(12.0f));
         addUser.add(follow);
         this.add(addUser);
-        this.add(new JList());
         
-        tweet = new JPanel();
+        
+        JList subscribersList = new JList(); 
+        subscribersList.setModel(user.getSubscriptionList());
+        this.add(subscribersList);
+        
+        
         addUser.setLayout(new GridLayout(1,2));
         tweetText = new JTextField();
 //        tweetText.setFont(tweetText.getFont().deriveFont(24.0f));
@@ -71,7 +75,7 @@ public class UserView extends JFrame {
         });
         addUser.add(tweetButton);
         
-        this.add(tweet);
+        
         JList tweetView = new JList();
         tweetView.setModel(user.getTweets());
         this.add(tweetView);

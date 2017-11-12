@@ -17,13 +17,13 @@ import javax.swing.tree.TreeNode;
  */
 public class User extends Component{
     private LinkedList<User> subscribers;
-    private LinkedList<User> subscriptions;
+    private DefaultListModel subscriptions;
     DefaultListModel tweets;
     private LinkedList<Tweet> myTweets;
     User(String name){
         super(name);
         subscribers = new LinkedList<User>();
-        subscriptions = new LinkedList<User>();
+        subscriptions = new DefaultListModel();
         tweets = new DefaultListModel();
         myTweets = new LinkedList<Tweet>();
     }
@@ -89,11 +89,18 @@ public class User extends Component{
     }
 
     public void updateSubscriberList(User u) {
-        subscriptions.add(u);
+        subscriptions.addElement(u);
     }
 
+    public DefaultListModel getSubscriptionList(){
+        return subscriptions;
+    }
     public DefaultListModel getTweets() {
         return tweets;
+    }
+
+    public String getName() {
+        return this.name;
     }
     
 }
