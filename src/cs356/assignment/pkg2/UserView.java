@@ -1,5 +1,6 @@
 package cs356.assignment.pkg2;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,13 +37,16 @@ public class UserView extends JFrame {
         followId = new JTextField();
         addUser.add(followId);
         follow = new JButton("Follow User");
+        Font font = follow.getFont().deriveFont(24.0f);
+        follow.setFont(font);
         follow.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
                if(followId.getText()!=""){
                    ae.setSource(followId);
                    listener.actionPerformed(ae);
-               } 
+               }
+               followId.setText("");
             }
         });
         addUser.add(follow);
@@ -51,25 +55,30 @@ public class UserView extends JFrame {
         // View people you follow
         JList subscribersList = new JList(); 
         subscribersList.setModel(user.getSubscriptionList());
+        subscribersList.setFont(font);
         this.add(subscribersList);
         
         //Send tweet
         addUser.setLayout(new GridLayout(1,2));
         tweetText = new JTextField();
+        tweetText.setFont(font);
         addUser.add(tweetText);
         tweetButton = new JButton("tweet");
+        tweetButton.setFont(font);
         tweetButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if(!tweetText.getText().isEmpty()){
                     user.sendTweet(tweetText.getText());
                 }
+                tweetText.setText("");
             }
         });
         addUser.add(tweetButton);
         
         // View tweets
         JList tweetView = new JList();
+        tweetView.setFont(font);
         tweetView.setModel(user.getTweets());
         this.add(tweetView);
     };

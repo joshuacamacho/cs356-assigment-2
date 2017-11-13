@@ -1,5 +1,6 @@
 package cs356.assignment.pkg2;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +31,7 @@ public class AdminControlPanel extends JFrame {
     private void initUI() {
         // Set Control Panel stuff
         setTitle("Admin Control Panel");
-        setSize(600, 600);
+        setSize(1200, 1200);
         setLocationRelativeTo(null);
         this.setLayout(new GridLayout(1,2));
         
@@ -42,6 +43,8 @@ public class AdminControlPanel extends JFrame {
         middle.add(new User("Danielle"));
         root.add(middle);
         JTree tree = new JTree(root);
+        Font font = tree.getFont().deriveFont(24.0f);
+        tree.setFont(font);
         JScrollPane treeView = new JScrollPane(tree);
         this.add(treeView);
         expandTree(tree);
@@ -52,8 +55,10 @@ public class AdminControlPanel extends JFrame {
         JPanel addUser = new JPanel();
         addUser.setLayout(new GridLayout(2,2));
         JTextField addUserTextField = new JTextField();
+        addUserTextField.setFont(font);
         addUser.add(addUserTextField);
         JButton addUserButton = new JButton("Add User");
+        addUserButton.setFont(font);
         // add user button listener
         addUserButton.addActionListener(new ActionListener() {
             @Override
@@ -61,15 +66,19 @@ public class AdminControlPanel extends JFrame {
                 if(!addUserTextField.getText().isEmpty()){
                     try{
                         UserGroup u = (UserGroup)tree.getLastSelectedPathComponent();
+                        if(u==null) u=root;
                         if(u.getAllowsChildren()){
                             DefaultTreeModel modal = (DefaultTreeModel) tree.getModel();
                             u.add(new User(addUserTextField.getText()));
                             modal.reload();
                             expandTree(tree);
+                            addUserTextField.setText("");
                         }
                     }catch(ClassCastException error){
                         //not userGroup
+                        JOptionPane.showMessageDialog(null, "Cannot add a User to another User");
                     }
+                    
                 }
             }
         });
@@ -78,8 +87,10 @@ public class AdminControlPanel extends JFrame {
         
         // Add usergroup  textField and button
         JTextField addUserGroupTextField = new JTextField();
+        addUserGroupTextField.setFont(font);
         addUser.add(addUserGroupTextField);
         JButton addUserGroupButton = new JButton("Add UserGroup");
+        addUserGroupButton.setFont(font);
         
         // Listen for button press
         addUserGroupButton.addActionListener(new ActionListener() {
@@ -88,15 +99,19 @@ public class AdminControlPanel extends JFrame {
                 if(!addUserGroupTextField.getText().isEmpty()){
                     try{
                         UserGroup u = (UserGroup)tree.getLastSelectedPathComponent();
+                        if(u==null) u=root;
                         if(u.getAllowsChildren()){
                             DefaultTreeModel modal = (DefaultTreeModel) tree.getModel();
                             u.add(new UserGroup(addUserGroupTextField.getText()));
                             modal.reload();
                             expandTree(tree);
+                            addUserGroupTextField.setText("");
                         }
                     }catch(ClassCastException error){
                         //not userGroup
+                        JOptionPane.showMessageDialog(null, "Cannot add UserGroup to a user");
                     }
+                    
                 }
             }
         });
@@ -108,6 +123,7 @@ public class AdminControlPanel extends JFrame {
         
         //user profile button
         JButton userProfileButton = new JButton("User Profile");
+        userProfileButton.setFont(font);
         userProfileButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -122,8 +138,14 @@ public class AdminControlPanel extends JFrame {
                         String searchID = j.getText();
                         System.out.println(searchID);
                         User toSub = (User)root.find(searchID);
-                        System.out.println(u.getName()+" subscribing to "+toSub.getName());
-                        u.subscribeTo(toSub);
+                        j.setText("");
+                        if(toSub!=null){
+                           System.out.println(u.getName()+" subscribing to "+toSub.getName());
+                           u.subscribeTo(toSub); 
+                        }else{
+                            JOptionPane.showMessageDialog(null, "User "+searchID+" does not exist");
+                        }
+                        
                     }
                 });
                 userview.setVisible(true);
@@ -137,6 +159,7 @@ public class AdminControlPanel extends JFrame {
         
         // total users
         JButton totalUsersButton = new JButton("Total Users");
+        totalUsersButton.setFont(font);
         totalUsersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -149,6 +172,7 @@ public class AdminControlPanel extends JFrame {
         
         //total groups
         JButton totalUserGroupsButton = new JButton("Total UserGroups");
+        totalUserGroupsButton.setFont(font);
         totalUserGroupsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -161,6 +185,7 @@ public class AdminControlPanel extends JFrame {
         
         //total messages
         JButton totalTweetsButton = new JButton("Total Tweets");
+        totalTweetsButton.setFont(font);
         totalTweetsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -174,6 +199,7 @@ public class AdminControlPanel extends JFrame {
         
         // positive message %
         JButton positiveMessageButton = new JButton("% Positive Messages");
+        positiveMessageButton.setFont(font);
         positiveMessageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
