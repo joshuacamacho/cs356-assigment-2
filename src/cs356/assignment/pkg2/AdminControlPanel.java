@@ -19,12 +19,19 @@ import javax.swing.tree.DefaultTreeModel;
  * @author Josh
  */
 public class AdminControlPanel extends JFrame {
+    private static AdminControlPanel panel=null;
     private UserGroup root;
-    public AdminControlPanel() {
+    private AdminControlPanel() {
 
         initUI();
     }
     
+    public static AdminControlPanel getInstance(){
+        if(panel==null){
+            panel = new AdminControlPanel();
+        }
+        return panel;
+    }
     /**
      * Initialize UI
      */

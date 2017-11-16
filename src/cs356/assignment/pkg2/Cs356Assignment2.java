@@ -14,7 +14,7 @@ public class Cs356Assignment2 {
    public static void main(String[] args) {
 
         EventQueue.invokeLater(() -> {
-            AdminControlPanel ex = new AdminControlPanel();
+            AdminControlPanel ex = AdminControlPanel.getInstance();
             ex.setVisible(true);
         });
     }
