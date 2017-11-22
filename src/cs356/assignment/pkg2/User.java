@@ -1,10 +1,12 @@
 package cs356.assignment.pkg2;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.LinkedList;
-import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JTextField;
 import javax.swing.tree.TreeNode;
 
 /**
@@ -18,7 +20,8 @@ public class User extends Component{
     private DefaultListModel subscriptions;
     private DefaultListModel tweets;
     private ArrayList<Tweet> myTweets;
-    
+    private JTextField lastUpdated;
+    private long lastUpdatedValue;
     /**
      * Constructor, requires a name
      * @param name String which represents the name of the User
@@ -29,6 +32,8 @@ public class User extends Component{
         subscriptions = new DefaultListModel();
         tweets = new DefaultListModel();
         myTweets = new ArrayList<Tweet>();
+        lastUpdated = new JTextField();
+        lastUpdatedValue=0;
     }
     
     /**
@@ -135,6 +140,11 @@ public class User extends Component{
         myTweets.add(t);
         tweets.addElement(t);
         broadcast(t);
+        lastUpdatedValue = System.currentTimeMillis();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        lastUpdated.setText("Last Updated "+dateFormat.format(
+                            new Date(lastUpdatedValue)
+                    ));
     }
 
     /**
@@ -171,13 +181,7 @@ public class User extends Component{
         return tweets;
     }
 
-    /**
-     * Get name property
-     * @return this user's name
-     */
-    public String getName() {
-        return this.name;
-    }
+    
     
     /**
      * User implementation of accept visitor
@@ -202,6 +206,15 @@ public class User extends Component{
      */
     public ArrayList<Tweet> getTweetsAsList(){
         return myTweets;
+    }
+    
+    JTextField getLastUpdated(){
+        return lastUpdated;
+    }
+    
+    long getLastUpdatedValue(){
+        
+        return lastUpdatedValue;
     }
     
 }

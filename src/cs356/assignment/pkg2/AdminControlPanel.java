@@ -4,7 +4,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -45,8 +48,8 @@ public class AdminControlPanel extends JFrame {
         
         // Set tree root with default info
         root = new UserGroup("Users");
-        root.add(new User("Joshua Camacho"));
-        UserGroup middle = new UserGroup("Bad students");
+        root.add(new User("Joshua_Camacho"));
+        UserGroup middle = new UserGroup("Bad_students");
         middle.add(new User("Danielle"));
         root.add(middle);
         JTree tree = new JTree(root);
@@ -134,35 +137,39 @@ public class AdminControlPanel extends JFrame {
         userProfileButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
-                User u = (User)tree.getLastSelectedPathComponent();
-                UserView userview = new UserView(u);
-                userview.setTitle(u.getName()+"'s profile");
-                // New follower event
-                userview.SetActionListener(new ActionListener(){
-                    @Override
-                    public void actionPerformed(ActionEvent ae) {
-                        JTextField j = (JTextField)ae.getSource();
-                        String searchID = j.getText();
-                        System.out.println(searchID);
-                        User toSub = (User)root.find(searchID);
-                        j.setText("");
-                        if(toSub!=null){
-                           System.out.println(u.getName()+" subscribing to "+toSub.getName());
-                           u.subscribeTo(toSub); 
-                        }else{
-                            JOptionPane.showMessageDialog(null, "User "+searchID+" does not exist");
+                try {
+                    User u = (User)tree.getLastSelectedPathComponent();
+                    UserView userview = new UserView(u);
+                    userview.setTitle(u.getName()+"'s profile");
+                    // New follower event
+                    userview.SetActionListener(new ActionListener(){
+                        @Override
+                        public void actionPerformed(ActionEvent ae) {
+                            JTextField j = (JTextField)ae.getSource();
+                            String searchID = j.getText();
+                            System.out.println(searchID);
+                            User toSub = (User)root.find(searchID);
+                            j.setText("");
+                            if(toSub!=null){
+                                System.out.println(u.getName()+" subscribing to "+toSub.getName());
+                                u.subscribeTo(toSub);
+                            }else{
+                                JOptionPane.showMessageDialog(null, "User "+searchID+" does not exist");
+                            }
+                            
                         }
-                        
-                    }
-                });
-                userview.setVisible(true);
+                    });
+                    userview.setVisible(true);
+                } catch (ParseException ex) {
+                    Logger.getLogger(AdminControlPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             
         });
         threeSections.add(userProfileButton);
         
         JPanel fourButtons = new JPanel();
-        fourButtons.setLayout(new GridLayout(2,2));
+        fourButtons.setLayout(new GridLayout(3,2));
         
         // total users
         JButton totalUsersButton = new JButton("Total Users");
@@ -217,6 +224,46 @@ public class AdminControlPanel extends JFrame {
         });
         
         fourButtons.add(positiveMessageButton);
+        
+        
+        // Valid ID
+        JButton validId = new JButton("ID Validator");
+        validId.setFont(font);
+        validId.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                NodeVisitor v = new IdValidatorVisitor();
+                treeTraverse(root,v);
+                if(v.getResult()==1){
+                     JOptionPane.showMessageDialog(null, "Invalid Ids for user(s) or usergroup(s)");
+                }else{
+                    JOptionPane.showMessageDialog(null, "All Ids are valid");
+                }
+                
+            }
+        });
+        
+        fourButtons.add(validId);
+        
+        
+        // Last Updated user
+        JButton lastUpdated = new JButton("Last Updated User");
+        lastUpdated.setFont(font);
+        lastUpdated.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                LastUpdatedVisitor v = new LastUpdatedVisitor();
+                treeTraverse(root,v);
+                JOptionPane.showMessageDialog(null, v.getLastUpdated());
+            }
+        });
+        
+        fourButtons.add(lastUpdated);
+        
+        
+        
+        
+        
         threeSections.add(fourButtons);
         
         this.add(threeSections);

@@ -4,6 +4,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -22,15 +25,17 @@ public class UserView extends JFrame {
     private JButton follow;
     private JTextField followId;
     private ActionListener listener;
-    UserView(User user){
+    UserView(User user) throws ParseException{
         this.user=user;
         makeUI();
     }
-    private void makeUI(){
+    private void makeUI() throws ParseException{
         
         // init window
         this.setSize(800,800);
         this.setLayout(new GridLayout(0,1));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        
         JPanel addUser = new JPanel();
         addUser.setLayout(new GridLayout(1,2));
         // follow user
@@ -50,6 +55,16 @@ public class UserView extends JFrame {
             }
         });
         addUser.add(follow);
+        
+        
+        JTextField udate = new JTextField(
+                    "User created "+dateFormat.format(
+                            new Date(user.getCreationTime())
+                    )
+                );
+        udate.setFont(font);
+        this.add(udate);
+        this.add(user.getLastUpdated());
         this.add(addUser);
         
         // View people you follow

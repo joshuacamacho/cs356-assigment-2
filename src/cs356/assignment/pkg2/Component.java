@@ -13,6 +13,7 @@ abstract class Component implements TreeNode{
     protected ArrayList<Component> children;
     protected Component parent;
     protected String name;
+    private long creationTime; 
     
     /**
      * Component constructor
@@ -21,6 +22,7 @@ abstract class Component implements TreeNode{
     Component(String name){
         this.name=name;
         children = new ArrayList<Component>();
+        creationTime = System.currentTimeMillis();
     }
     
     /**
@@ -136,5 +138,17 @@ abstract class Component implements TreeNode{
      */
     public ArrayList<Component> getChildren() {
         return children;
+    }
+    
+    /**
+     * Get name property
+     * @return this user's name
+     */
+    public String getName() {
+        return this.name;
+    }
+    
+    public long getCreationTime(){
+        return creationTime;
     }
 }
